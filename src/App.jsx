@@ -58,7 +58,7 @@ export default function App() {
       {screen === 'top' ? (
         <>
           <Header />
-          <main className={styles.main}>
+          <main className={`${styles.main} ${styles.mainScrollable}`}>
             <TopPage
               onStartGame={handleStartGame}
               onShowRules={() => setShowRules(true)}
