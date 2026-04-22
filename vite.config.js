@@ -4,4 +4,13 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/Siritori-Training/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          dictionary: ['./src/data/words.json'],
+        },
+      },
+    },
+  },
 })
