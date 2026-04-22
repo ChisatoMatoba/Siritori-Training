@@ -4,6 +4,24 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
+.readyContainer {
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #eef4fb, #f0e8ff);
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.readyTime {
+  font-size: 1.1rem;
+  color: #4a90d9;
+  margin-bottom: 4px;
+}
+
+.readyHint {
+  font-size: 0.78rem;
+  color: #999;
+}
+
 .barBg {
   height: 8px;
   background: #e8e8e8;
