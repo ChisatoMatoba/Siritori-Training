@@ -26,8 +26,8 @@ const MODES = [
     id: 'constraint',
     emoji: '🔒',
     title: 'しばりモード',
-    description: '語尾や文字数の縛り付きでしりとり！',
-    available: false,
+    description: '「語尾がす」「4文字で」など毎ターン縛り付き！',
+    available: true,
   },
 ];
 

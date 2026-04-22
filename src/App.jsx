@@ -6,21 +6,24 @@ import TopPage from './components/TopPage.jsx';
 import RulesModal from './components/RulesModal.jsx';
 import { useShiritoriGame } from './hooks/useShiritoriGame.js';
 import { useTimeAttackGame } from './hooks/useTimeAttackGame.js';
+import { useConstraintGame } from './hooks/useConstraintGame.js';
 import { findMeanComputerWord } from './utils/shiritori.js';
 import styles from './App.module.css';
 
 export default function App() {
   const [screen, setScreen] = useState('top'); // 'top' | 'game'
-  const [mode, setMode] = useState('normal'); // 'normal' | 'time-attack' | 'mean'
+  const [mode, setMode] = useState('normal'); // 'normal' | 'time-attack' | 'mean' | 'constraint'
   const [showRules, setShowRules] = useState(false);
 
   const normalGame = useShiritoriGame();
   const meanGame = useShiritoriGame({ wordFinder: findMeanComputerWord });
   const timeAttackGame = useTimeAttackGame();
+  const constraintGame = useConstraintGame();
 
   function getGame() {
     if (mode === 'time-attack') return timeAttackGame;
     if (mode === 'mean') return meanGame;
+    if (mode === 'constraint') return constraintGame;
     return normalGame;
   }
   const game = getGame();
@@ -31,6 +34,8 @@ export default function App() {
       timeAttackGame.resetGame();
     } else if (selectedMode === 'mean') {
       meanGame.resetGame();
+    } else if (selectedMode === 'constraint') {
+      constraintGame.resetGame();
     } else {
       normalGame.resetGame();
     }
@@ -72,6 +77,7 @@ export default function App() {
               onSubmit={game.submitWord}
               onGiveUp={mode !== 'time-attack' ? game.giveUp : null}
               timer={timer}
+              constraint={mode === 'constraint' ? game.constraint : null}
             />
           </main>
           {game.gameOver && (

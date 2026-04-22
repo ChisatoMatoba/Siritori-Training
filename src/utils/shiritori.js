@@ -162,3 +162,88 @@ export function validateInput(word, lastChar, usedWords, dictionary) {
 
   return null;
 }
+
+// ====== しばりモード関連 ======
+
+/** しばり条件の種類 */
+const CONSTRAINT_TYPES = ['endsWith', 'length', 'contains'];
+
+/** 語尾候補（ある程度単語数が多い文字のみ） */
+const END_CHARS = ['い', 'う', 'く', 'き', 'す', 'し', 'と', 'り', 'る', 'つ', 'か', 'ち', 'ど', 'た', 'こ', 'め'];
+
+/** 含む文字候補 */
+const CONTAIN_CHARS = ['か', 'き', 'く', 'こ', 'さ', 'し', 'す', 'た', 'ち', 'つ', 'て', 'な', 'に', 'の', 'は', 'ま', 'み', 'も', 'ら', 'り', 'る', 'れ'];
+
+/**
+ * しばり条件を生成する
+ * 先頭文字+条件を満たす単語が辞書に存在することを保証
+ */
+export function generateConstraint(startChar, usedWords, dictionary) {
+  const candidates = dictionary[startChar];
+  if (!candidates) return null;
+
+  const available = candidates.filter(w => !usedWords.has(w) && !endsWithN(w));
+  if (available.length === 0) return null;
+
+  // ランダム順でしばり種別を試す
+  const shuffledTypes = [...CONSTRAINT_TYPES].sort(() => Math.random() - 0.5);
+
+  for (const type of shuffledTypes) {
+    const constraint = tryGenerateConstraint(type, available);
+    if (constraint) return constraint;
+  }
+
+  return null; // どの条件も作れなかった
+}
+
+function tryGenerateConstraint(type, available) {
+  if (type === 'endsWith') {
+    const shuffled = [...END_CHARS].sort(() => Math.random() - 0.5);
+    for (const ch of shuffled) {
+      const matching = available.filter(w => getLastChar(w) === ch);
+      if (matching.length >= 3) {
+        return { type: 'endsWith', char: ch, label: `「${ch}」で終わる単語` };
+      }
+    }
+  }
+
+  if (type === 'length') {
+    const lengths = [3, 4, 5, 6].sort(() => Math.random() - 0.5);
+    for (const len of lengths) {
+      const matching = available.filter(w => w.length === len);
+      if (matching.length >= 3) {
+        return { type: 'length', value: len, label: `${len}文字の単語` };
+      }
+    }
+  }
+
+  if (type === 'contains') {
+    const shuffled = [...CONTAIN_CHARS].sort(() => Math.random() - 0.5);
+    for (const ch of shuffled) {
+      const matching = available.filter(w => w.includes(ch));
+      if (matching.length >= 3) {
+        return { type: 'contains', char: ch, label: `「${ch}」を含む単語` };
+      }
+    }
+  }
+
+  return null;
+}
+
+/**
+ * しばり条件を満たしているかチェック
+ */
+export function meetsConstraint(word, constraint) {
+  if (!constraint) return true;
+
+  switch (constraint.type) {
+    case 'endsWith':
+      return getLastChar(word) === constraint.char;
+    case 'length':
+      return word.length === constraint.value;
+    case 'contains':
+      return word.includes(constraint.char);
+    default:
+      return true;
+  }
+}

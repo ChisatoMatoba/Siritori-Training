@@ -19,6 +19,14 @@ function getMessage(turnCount, result, mode) {
     if (turnCount <= 20) return 'いじわるCPU相手にお見事！🌟';
     return 'いじわるマスター！何も怖くない！🏆';
   }
+  if (mode === 'constraint') {
+    if (result === 'win') return 'しばり付きでCPUに勝利！すごい！🎉';
+    if (turnCount <= 3) return 'しばりが厳しかった…💦';
+    if (turnCount <= 5) return 'しばり付きで粘った！👍';
+    if (turnCount <= 10) return 'しばりをこなしてる！✨';
+    if (turnCount <= 20) return 'しばりモード上級者！🌟';
+    return 'しばりマスター！もう敵なし！🏆';
+  }
   if (result === 'win') {
     return 'CPUが答えられなくなりました！あなたの勝ち！🎉';
   }
