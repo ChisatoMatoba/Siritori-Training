@@ -18,6 +18,19 @@ export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, 
     }
   }, [words, gameOver]);
 
+  // モバイルキーボード表示時に入力欄が隠れないようスクロール
+  useEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    const handleFocus = () => {
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+    };
+    el.addEventListener('focus', handleFocus);
+    return () => el.removeEventListener('focus', handleFocus);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -34,10 +47,11 @@ export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, 
           started={timer.started}
         />
       )}
+      <div className={styles.hint}>
+        「{lastChar}」から始まる単語を入力してね！
+      </div>
       <div className={styles.chat}>
-        <div className={styles.hint}>
-          「{lastChar}」から始まる単語を入力してね！
-        </div>
+        <div className={styles.chatSpacer} />
         {words.map((w, i) => (
           <WordBubble key={i} text={w.text} speaker={w.speaker} />
         ))}
