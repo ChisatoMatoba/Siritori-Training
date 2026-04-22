@@ -15,10 +15,7 @@
   font-size: 2.8rem;
   font-weight: 900;
   letter-spacing: 0.15em;
-  background: linear-gradient(135deg, #4a90d9, #6c5ce7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #333;
 }
 
 .subtitle {
@@ -27,6 +24,20 @@
   color: #888;
   letter-spacing: 0.3em;
   margin-top: 4px;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 /* ---- modes ---- */
@@ -49,18 +60,32 @@
   gap: 14px;
   width: 100%;
   padding: 16px;
+  padding-left: 20px;
   margin-bottom: 10px;
   background: #fff;
   border: 2px solid #e8e8e8;
+  border-left: none;
   border-radius: 14px;
   cursor: pointer;
   text-align: left;
   transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.modeCard::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--c1), var(--c2));
+  border-radius: 14px 0 0 14px;
 }
 
 .modeCard:hover:not(.disabled) {
-  border-color: #4a90d9;
-  box-shadow: 0 2px 12px rgba(74, 144, 217, 0.15);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   transform: translateY(-1px);
 }
 
@@ -136,7 +161,7 @@
 }
 
 .rulesButton:hover {
-  background: #f0f4f8;
-  border-color: #4a90d9;
-  color: #4a90d9;
+  background: #f8f4fb;
+  border-color: #b5a8e0;
+  color: #8a7cbf;
 }

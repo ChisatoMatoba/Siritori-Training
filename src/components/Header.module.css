@@ -3,11 +3,17 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 12px;
-  background: #4a90d9;
+  background: #5a9fcf;
   color: #fff;
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+.rainbow {
+  height: 3px;
+  background: linear-gradient(90deg, #e04040, #f08030, #f0d020, #40b060, #3080e0, #8050d0, #e04090);
+  flex-shrink: 0;
 }
 
 .title {

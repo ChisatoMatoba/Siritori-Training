@@ -1,7 +1,8 @@
 import styles from './Header.module.css';
 
-export default function Header({ onBack, onShowRules }) {
+export default function Header({ onBack, onShowRules, hideTitle }) {
   return (
+    <>
     <header className={styles.header}>
       {onBack ? (
         <button className={styles.backButton} onClick={onBack}>
@@ -10,7 +11,7 @@ export default function Header({ onBack, onShowRules }) {
       ) : (
         <div className={styles.spacer} />
       )}
-      <h1 className={styles.title}>🎯 しりとり特訓</h1>
+      {!hideTitle && <h1 className={styles.title}>🌈 しりとり特訓 🌈</h1>}
       {onShowRules ? (
         <button className={styles.rulesButton} onClick={onShowRules}>
           ?
@@ -19,5 +20,6 @@ export default function Header({ onBack, onShowRules }) {
         <div className={styles.spacer} />
       )}
     </header>
+    </>
   );
 }

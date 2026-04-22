@@ -57,7 +57,7 @@ export default function App() {
     <div className={styles.app}>
       {screen === 'top' ? (
         <>
-          <Header />
+          <Header hideTitle />
           <main className={`${styles.main} ${styles.mainScrollable}`}>
             <TopPage
               onStartGame={handleStartGame}

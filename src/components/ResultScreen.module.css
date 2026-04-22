@@ -27,7 +27,7 @@
 .turns {
   font-size: 2rem;
   font-weight: 700;
-  color: #4a90d9;
+  color: #7eb8e0;
   margin-bottom: 8px;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .button {
-  background: #4a90d9;
+  background: #7eb8e0;
   color: #fff;
   border: none;
   border-radius: 24px;
@@ -52,7 +52,7 @@
 }
 
 .button:hover {
-  background: #357abd;
+  background: #6aa8d4;
 }
 
 .backButton {
@@ -70,6 +70,6 @@
 }
 
 .backButton:hover {
-  border-color: #4a90d9;
-  color: #4a90d9;
+  border-color: #7eb8e0;
+  color: #7eb8e0;
 }
