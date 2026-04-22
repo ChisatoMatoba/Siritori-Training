@@ -1,0 +1,142 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 0 20px 32px;
+}
+
+/* ---- hero ---- */
+.hero {
+  text-align: center;
+  padding: 48px 0 36px;
+}
+
+.logo {
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  background: linear-gradient(135deg, #4a90d9, #6c5ce7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #888;
+  letter-spacing: 0.3em;
+  margin-top: 4px;
+}
+
+/* ---- modes ---- */
+.modes {
+  flex: 1;
+}
+
+.sectionTitle {
+  font-size: 0.85rem;
+  color: #999;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+.modeCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 10px;
+  background: #fff;
+  border: 2px solid #e8e8e8;
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.modeCard:hover:not(.disabled) {
+  border-color: #4a90d9;
+  box-shadow: 0 2px 12px rgba(74, 144, 217, 0.15);
+  transform: translateY(-1px);
+}
+
+.modeCard:active:not(.disabled) {
+  transform: translateY(0);
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modeEmoji {
+  font-size: 2rem;
+  flex-shrink: 0;
+  width: 48px;
+  text-align: center;
+}
+
+.modeInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.modeTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comingSoon {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #fff;
+  background: #bbb;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+.modeDesc {
+  font-size: 0.8rem;
+  color: #888;
+  line-height: 1.4;
+}
+
+.arrow {
+  font-size: 1.5rem;
+  color: #ccc;
+  font-weight: 300;
+  flex-shrink: 0;
+}
+
+/* ---- rules button ---- */
+.rulesButton {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  background: none;
+  border: 1.5px solid #ddd;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rulesButton:hover {
+  background: #f0f4f8;
+  border-color: #4a90d9;
+  color: #4a90d9;
+}
