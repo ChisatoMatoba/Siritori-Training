@@ -34,11 +34,6 @@ export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, 
           started={timer.started}
         />
       )}
-      {constraint && !gameOver && (
-        <div className={styles.constraint}>
-          🔒 しばり：{constraint.label}
-        </div>
-      )}
       <div className={styles.chat}>
         <div className={styles.hint}>
           「{lastChar}」から始まる単語を入力してね！
@@ -51,6 +46,11 @@ export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, 
 
       {!gameOver && (
         <form className={styles.inputArea} onSubmit={handleSubmit}>
+          {constraint && (
+            <div className={styles.constraint}>
+              🔒 しばり：{constraint.label}
+            </div>
+          )}
           {error && <div className={styles.error}>{error}</div>}
           <div className={styles.inputRow}>
             <input
