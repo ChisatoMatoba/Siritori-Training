@@ -35,6 +35,7 @@ export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, 
         />
       )}
       <div className={styles.chat}>
+        <div className={styles.chatSpacer} />
         <div className={styles.hint}>
           「{lastChar}」から始まる単語を入力してね！
         </div>
