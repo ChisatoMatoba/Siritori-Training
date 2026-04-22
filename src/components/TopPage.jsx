@@ -12,8 +12,8 @@ const MODES = [
     id: 'time-attack',
     emoji: '⏱️',
     title: 'タイムアタック',
-    description: '制限時間内にどれだけ続けられるか挑戦！',
-    available: false,
+    description: '60秒でどれだけ続けられるか挑戦！',
+    available: true,
   },
   {
     id: 'hard',
