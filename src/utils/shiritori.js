@@ -63,7 +63,9 @@ export function isValidWord(word, dictionary) {
  * 前の単語の末尾文字で始まっているか
  */
 export function isValidMove(word, lastChar) {
-  return word[0] === lastChar;
+  const firstChar = word[0];
+  const normalized = SMALL_TO_LARGE[firstChar] || firstChar;
+  return normalized === lastChar;
 }
 
 /**
