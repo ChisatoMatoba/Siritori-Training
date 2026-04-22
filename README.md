@@ -2,7 +2,7 @@
 
 日本語のしりとりを CPU 対戦で特訓できる Web アプリです。
 
-**[▶ プレイする](https://chisatomatoba.github.io/Siritori-Training/)**
+**[▶ プレイする](https://siritori-training.vercel.app/)**
 
 ## 特徴
 
