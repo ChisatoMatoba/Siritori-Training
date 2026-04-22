@@ -5,33 +5,39 @@ import ResultScreen from './components/ResultScreen.jsx';
 import TopPage from './components/TopPage.jsx';
 import RulesModal from './components/RulesModal.jsx';
 import { useShiritoriGame } from './hooks/useShiritoriGame.js';
+import { useTimeAttackGame } from './hooks/useTimeAttackGame.js';
 import styles from './App.module.css';
 
 export default function App() {
   const [screen, setScreen] = useState('top'); // 'top' | 'game'
+  const [mode, setMode] = useState('normal'); // 'normal' | 'time-attack'
   const [showRules, setShowRules] = useState(false);
 
-  const {
-    words,
-    gameOver,
-    gameResult,
-    error,
-    lastChar,
-    turnCount,
-    submitWord,
-    resetGame,
-    giveUp,
-  } = useShiritoriGame();
+  const normalGame = useShiritoriGame();
+  const timeAttackGame = useTimeAttackGame();
 
-  const handleStartGame = () => {
-    resetGame();
+  const game = mode === 'time-attack' ? timeAttackGame : normalGame;
+
+  const handleStartGame = (selectedMode) => {
+    setMode(selectedMode);
+    if (selectedMode === 'time-attack') {
+      timeAttackGame.resetGame();
+    } else {
+      normalGame.resetGame();
+    }
     setScreen('game');
   };
 
   const handleBackToTop = () => {
-    resetGame();
+    game.resetGame();
     setScreen('top');
   };
+
+  const timer = mode === 'time-attack' ? {
+    timeLeft: timeAttackGame.timeLeft,
+    timeLimit: timeAttackGame.timeLimit,
+    started: timeAttackGame.started,
+  } : null;
 
   return (
     <div className={styles.app}>
@@ -50,20 +56,22 @@ export default function App() {
           <Header onBack={handleBackToTop} onShowRules={() => setShowRules(true)} />
           <main className={styles.main}>
             <GameBoard
-              words={words}
-              lastChar={lastChar}
-              error={error}
-              gameOver={gameOver}
-              onSubmit={submitWord}
-              onGiveUp={giveUp}
+              words={game.words}
+              lastChar={game.lastChar}
+              error={game.error}
+              gameOver={game.gameOver}
+              onSubmit={game.submitWord}
+              onGiveUp={mode === 'normal' ? game.giveUp : null}
+              timer={timer}
             />
           </main>
-          {gameOver && (
+          {game.gameOver && (
             <ResultScreen
-              turnCount={turnCount}
-              gameResult={gameResult}
-              onReset={resetGame}
+              turnCount={game.turnCount}
+              gameResult={game.gameResult}
+              onReset={game.resetGame}
               onBackToTop={handleBackToTop}
+              mode={mode}
             />
           )}
         </>

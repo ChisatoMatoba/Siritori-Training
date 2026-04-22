@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import WordBubble from './WordBubble.jsx';
+import TimerBar from './TimerBar.jsx';
 import styles from './GameBoard.module.css';
 
-export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, onGiveUp }) {
+export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, onGiveUp, timer }) {
   const [input, setInput] = useState('');
   const chatEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -26,6 +27,13 @@ export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, 
 
   return (
     <div className={styles.board}>
+      {timer && (
+        <TimerBar
+          timeLeft={timer.timeLeft}
+          timeLimit={timer.timeLimit}
+          started={timer.started}
+        />
+      )}
       <div className={styles.chat}>
         <div className={styles.hint}>
           「{lastChar}」から始まる単語を入力してね！
@@ -54,13 +62,15 @@ export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, 
             />
             <button className={styles.sendButton} type="submit">送信</button>
           </div>
-          <button
-            className={styles.giveUpButton}
-            type="button"
-            onClick={onGiveUp}
-          >
-            🏳️ 参りました
-          </button>
+          {onGiveUp && (
+            <button
+              className={styles.giveUpButton}
+              type="button"
+              onClick={onGiveUp}
+            >
+              🏳️ 参りました
+            </button>
+          )}
         </form>
       )}
     </div>
