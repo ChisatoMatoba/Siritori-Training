@@ -11,7 +11,7 @@ function getMessage(turnCount, result) {
   return 'しりとりマスター！！🏆';
 }
 
-export default function ResultScreen({ turnCount, gameResult, onReset }) {
+export default function ResultScreen({ turnCount, gameResult, onReset, onBackToTop }) {
   const isWin = gameResult === 'win';
   return (
     <div className={styles.overlay}>
@@ -23,6 +23,9 @@ export default function ResultScreen({ turnCount, gameResult, onReset }) {
         <p className={styles.message}>{getMessage(turnCount, gameResult)}</p>
         <button className={styles.button} onClick={onReset}>
           もう一回
+        </button>
+        <button className={styles.backButton} onClick={onBackToTop}>
+          TOPに戻る
         </button>
       </div>
     </div>

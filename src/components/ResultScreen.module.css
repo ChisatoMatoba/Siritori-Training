@@ -48,8 +48,28 @@
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
+  width: 100%;
 }
 
 .button:hover {
   background: #357abd;
+}
+
+.backButton {
+  margin-top: 10px;
+  background: none;
+  border: 1.5px solid #ddd;
+  border-radius: 24px;
+  padding: 10px 32px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.backButton:hover {
+  border-color: #4a90d9;
+  color: #4a90d9;
 }
