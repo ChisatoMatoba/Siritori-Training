@@ -11,6 +11,14 @@ function getMessage(turnCount, result, mode) {
     if (turnCount <= 25) return 'お見事！高速しりとり！🌟';
     return 'タイムアタックマスター！！🏆';
   }
+  if (mode === 'mean') {
+    if (result === 'win') return 'いじわるCPUに勝った！天才！🎉';
+    if (turnCount <= 3) return 'いじわるCPUは容赦ない…💦';
+    if (turnCount <= 5) return 'なかなか粘った！👍';
+    if (turnCount <= 10) return 'いじわる攻めに耐えてる！✨';
+    if (turnCount <= 20) return 'いじわるCPU相手にお見事！🌟';
+    return 'いじわるマスター！何も怖くない！🏆';
+  }
   if (result === 'win') {
     return 'CPUが答えられなくなりました！あなたの勝ち！🎉';
   }

@@ -7,6 +7,7 @@ import {
   isHiraganaOnly,
   isAlreadyUsed,
   findComputerWord,
+  findMeanComputerWord,
   validateInput,
 } from './shiritori.js';
 
@@ -206,5 +207,58 @@ describe('validateInput', () => {
     const dict2 = { ...dict, 'り': [...dict['り'], 'りんりん'] };
     const used = new Set();
     expect(validateInput('りんりん', lastChar, used, dict2)).toBe('ん');
+  });
+});
+
+// --- findMeanComputerWord ---
+describe('findMeanComputerWord', () => {
+  it('攻め文字（ず・ぬ・る・ぷ）で終わる単語を優先する', () => {
+    const dict = {
+      'り': ['りず', 'りあ', 'りか'],   // りず→「ず」(攻め文字)
+      'ず': ['ずこう'],
+      'あ': ['あめ'],
+      'か': ['かさ'],
+    };
+    const used = new Set();
+    // 20回試行して、すべて「りず」を選ぶはず（攻め文字が優先）
+    for (let i = 0; i < 20; i++) {
+      const word = findMeanComputerWord('り', used, dict);
+      expect(word).toBe('りず');
+    }
+  });
+
+  it('攻め文字の候補がなければ通常ランダム', () => {
+    const dict = { 'り': ['りか', 'りさ'], 'か': ['かめ'], 'さ': ['さけ'] };
+    const used = new Set();
+    const word = findMeanComputerWord('り', used, dict);
+    expect(['りか', 'りさ']).toContain(word);
+  });
+
+  it('未使用の単語のみから選ぶ', () => {
+    const dict = { 'り': ['りす', 'りか'] };
+    const used = new Set(['りす']);
+    const word = findMeanComputerWord('り', used, dict);
+    expect(word).toBe('りか');
+  });
+
+  it('全て使用済み → null', () => {
+    const dict = { 'り': ['りす', 'りか'] };
+    const used = new Set(['りす', 'りか']);
+    const word = findMeanComputerWord('り', used, dict);
+    expect(word).toBeNull();
+  });
+
+  it('「ん」で終わる単語は選ばない', () => {
+    const dict = { 'ご': ['ごはん', 'ごま'], 'ま': ['まど'] };
+    const used = new Set();
+    const word = findMeanComputerWord('ご', used, dict);
+    expect(word).toBe('ごま');
+  });
+
+  it('該当文字のキーがない → null', () => {
+    const dict = { 'あ': ['あめ'] };
+    const used = new Set();
+    const word = findMeanComputerWord('ぬ', used, dict);
+    expect(word).toBeNull();
   });
 });

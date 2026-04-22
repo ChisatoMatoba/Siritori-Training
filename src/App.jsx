@@ -6,22 +6,31 @@ import TopPage from './components/TopPage.jsx';
 import RulesModal from './components/RulesModal.jsx';
 import { useShiritoriGame } from './hooks/useShiritoriGame.js';
 import { useTimeAttackGame } from './hooks/useTimeAttackGame.js';
+import { findMeanComputerWord } from './utils/shiritori.js';
 import styles from './App.module.css';
 
 export default function App() {
   const [screen, setScreen] = useState('top'); // 'top' | 'game'
-  const [mode, setMode] = useState('normal'); // 'normal' | 'time-attack'
+  const [mode, setMode] = useState('normal'); // 'normal' | 'time-attack' | 'mean'
   const [showRules, setShowRules] = useState(false);
 
   const normalGame = useShiritoriGame();
+  const meanGame = useShiritoriGame({ wordFinder: findMeanComputerWord });
   const timeAttackGame = useTimeAttackGame();
 
-  const game = mode === 'time-attack' ? timeAttackGame : normalGame;
+  function getGame() {
+    if (mode === 'time-attack') return timeAttackGame;
+    if (mode === 'mean') return meanGame;
+    return normalGame;
+  }
+  const game = getGame();
 
   const handleStartGame = (selectedMode) => {
     setMode(selectedMode);
     if (selectedMode === 'time-attack') {
       timeAttackGame.resetGame();
+    } else if (selectedMode === 'mean') {
+      meanGame.resetGame();
     } else {
       normalGame.resetGame();
     }
@@ -61,7 +70,7 @@ export default function App() {
               error={game.error}
               gameOver={game.gameOver}
               onSubmit={game.submitWord}
-              onGiveUp={mode === 'normal' ? game.giveUp : null}
+              onGiveUp={mode !== 'time-attack' ? game.giveUp : null}
               timer={timer}
             />
           </main>

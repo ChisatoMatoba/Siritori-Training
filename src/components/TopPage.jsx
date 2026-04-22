@@ -16,10 +16,17 @@ const MODES = [
     available: true,
   },
   {
-    id: 'hard',
-    emoji: '🔥',
-    title: 'ハードモード',
-    description: 'CPUが本気を出してくる…！',
+    id: 'mean',
+    emoji: '🐍',
+    title: 'いじわるCPU',
+    description: 'CPUが「ず」「ぬ」「る」「ぷ」攻めで迫りくる！耐えられるか？',
+    available: true,
+  },
+  {
+    id: 'constraint',
+    emoji: '🔒',
+    title: 'しばりモード',
+    description: '語尾や文字数の縛り付きでしりとり！',
     available: false,
   },
 ];

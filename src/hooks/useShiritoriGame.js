@@ -5,7 +5,7 @@ import dictionary from '../data/words.json';
 const INITIAL_WORD = 'しりとり';
 const INITIAL_LAST_CHAR = 'り';
 
-export function useShiritoriGame() {
+export function useShiritoriGame({ wordFinder = findComputerWord } = {}) {
   const [words, setWords] = useState([
     { text: INITIAL_WORD, speaker: 'cpu' },
   ]);
@@ -46,7 +46,7 @@ export function useShiritoriGame() {
     const userLastChar = getLastChar(trimmed);
 
     // CPUの返答
-    const cpuWord = findComputerWord(userLastChar, usedWordsRef.current, dictionary);
+    const cpuWord = wordFinder(userLastChar, usedWordsRef.current, dictionary);
 
     if (!cpuWord) {
       // CPUが単語を見つけられない → ユーザーの勝ち

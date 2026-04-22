@@ -105,6 +105,31 @@ export function findComputerWord(lastChar, usedWords, dictionary) {
 }
 
 /**
+ * いじわるCPUが次の単語を選ぶ
+ * 末尾が「ず」「ぬ」「る」「ぷ」になる単語を優先して選ぶ（相手を追い詰める）
+ */
+const MEAN_TARGETS = new Set(['ず', 'ぬ', 'る', 'ぷ']);
+
+export function findMeanComputerWord(lastChar, usedWords, dictionary) {
+  const candidates = dictionary[lastChar];
+  if (!candidates || candidates.length === 0) return null;
+
+  const available = candidates.filter(w => !usedWords.has(w) && !endsWithN(w));
+  if (available.length === 0) return null;
+
+  // 攻め文字で終わる単語を優先
+  const meanWords = available.filter(w => MEAN_TARGETS.has(getLastChar(w)));
+  if (meanWords.length > 0) {
+    const index = Math.floor(Math.random() * meanWords.length);
+    return meanWords[index].word ?? meanWords[index];
+  }
+
+  // 攻め文字がなければ通常ランダム
+  const index = Math.floor(Math.random() * available.length);
+  return available[index];
+}
+
+/**
  * 入力のバリデーション
  * エラーがあればメッセージを返す。なければnull。
  */
