@@ -1,0 +1,91 @@
+.board {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  padding-bottom: 8px;
+}
+
+.hint {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 16px;
+  padding: 8px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.inputArea {
+  padding: 8px 16px 16px;
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.error {
+  color: #e04040;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+
+.inputRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid #ccc;
+  border-radius: 24px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: #4a90d9;
+}
+
+.sendButton {
+  background: #4a90d9;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.sendButton:hover {
+  background: #357abd;
+}
+
+.giveUpButton {
+  width: 100%;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 8px;
+  font-size: 0.85rem;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.giveUpButton:hover {
+  background: #ffeaea;
+  border-color: #e04040;
+  color: #e04040;
+}
