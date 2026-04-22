@@ -151,6 +151,20 @@ describe('findComputerWord', () => {
     const word = findComputerWord('ぬ', used, dict);
     expect(word).toBeNull();
   });
+
+  it('「ん」で終わる単語は選ばない', () => {
+    const dictWithN = { 'ご': ['ごはん', 'ごま'] };
+    const used = new Set();
+    const word = findComputerWord('ご', used, dictWithN);
+    expect(word).toBe('ごま');
+  });
+
+  it('「ん」で終わる単語しかない場合 → null（CPUの負け）', () => {
+    const dictOnlyN = { 'ご': ['ごはん', 'ごぜん'] };
+    const used = new Set();
+    const word = findComputerWord('ご', used, dictOnlyN);
+    expect(word).toBeNull();
+  });
 });
 
 // --- validateInput ---

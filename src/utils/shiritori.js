@@ -95,8 +95,8 @@ export function findComputerWord(lastChar, usedWords, dictionary) {
   const candidates = dictionary[lastChar];
   if (!candidates || candidates.length === 0) return null;
 
-  // 未使用の単語をフィルタ
-  const available = candidates.filter(w => !usedWords.has(w));
+  // 未使用かつ「ん」で終わらない単語をフィルタ
+  const available = candidates.filter(w => !usedWords.has(w) && !endsWithN(w));
   if (available.length === 0) return null;
 
   // ランダムに1つ選ぶ
