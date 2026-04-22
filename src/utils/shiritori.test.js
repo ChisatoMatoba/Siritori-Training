@@ -7,7 +7,10 @@ import {
   isHiraganaOnly,
   isAlreadyUsed,
   findComputerWord,
+  findMeanComputerWord,
   validateInput,
+  generateConstraint,
+  meetsConstraint,
 } from './shiritori.js';
 
 // --- getLastChar ---
@@ -206,5 +209,122 @@ describe('validateInput', () => {
     const dict2 = { ...dict, 'り': [...dict['り'], 'りんりん'] };
     const used = new Set();
     expect(validateInput('りんりん', lastChar, used, dict2)).toBe('ん');
+  });
+});
+
+// --- findMeanComputerWord ---
+describe('findMeanComputerWord', () => {
+  it('攻め文字（ず・ぬ・る・ぷ）で終わる単語を優先する', () => {
+    const dict = {
+      'り': ['りず', 'りあ', 'りか'],   // りず→「ず」(攻め文字)
+      'ず': ['ずこう'],
+      'あ': ['あめ'],
+      'か': ['かさ'],
+    };
+    const used = new Set();
+    // 20回試行して、すべて「りず」を選ぶはず（攻め文字が優先）
+    for (let i = 0; i < 20; i++) {
+      const word = findMeanComputerWord('り', used, dict);
+      expect(word).toBe('りず');
+    }
+  });
+
+  it('攻め文字の候補がなければ通常ランダム', () => {
+    const dict = { 'り': ['りか', 'りさ'], 'か': ['かめ'], 'さ': ['さけ'] };
+    const used = new Set();
+    const word = findMeanComputerWord('り', used, dict);
+    expect(['りか', 'りさ']).toContain(word);
+  });
+
+  it('未使用の単語のみから選ぶ', () => {
+    const dict = { 'り': ['りす', 'りか'] };
+    const used = new Set(['りす']);
+    const word = findMeanComputerWord('り', used, dict);
+    expect(word).toBe('りか');
+  });
+
+  it('全て使用済み → null', () => {
+    const dict = { 'り': ['りす', 'りか'] };
+    const used = new Set(['りす', 'りか']);
+    const word = findMeanComputerWord('り', used, dict);
+    expect(word).toBeNull();
+  });
+
+  it('「ん」で終わる単語は選ばない', () => {
+    const dict = { 'ご': ['ごはん', 'ごま'], 'ま': ['まど'] };
+    const used = new Set();
+    const word = findMeanComputerWord('ご', used, dict);
+    expect(word).toBe('ごま');
+  });
+
+  it('該当文字のキーがない → null', () => {
+    const dict = { 'あ': ['あめ'] };
+    const used = new Set();
+    const word = findMeanComputerWord('ぬ', used, dict);
+    expect(word).toBeNull();
+  });
+});
+
+// --- generateConstraint ---
+describe('generateConstraint', () => {
+  it('条件を生成できる（endsWith / length / contains のいずれか）', () => {
+    const dict = {
+      'り': ['りんご', 'りか', 'りす', 'りこう', 'りゅう', 'りゅうがく'],
+    };
+    const used = new Set();
+    const constraint = generateConstraint('り', used, dict);
+    expect(constraint).not.toBeNull();
+    expect(constraint).toHaveProperty('type');
+    expect(constraint).toHaveProperty('label');
+    expect(['endsWith', 'length', 'contains']).toContain(constraint.type);
+  });
+
+  it('辞書にキーがない → null', () => {
+    const dict = { 'あ': ['あめ'] };
+    const used = new Set();
+    expect(generateConstraint('ぬ', used, dict)).toBeNull();
+  });
+
+  it('全て使用済み → null', () => {
+    const dict = { 'り': ['りす', 'りか'] };
+    const used = new Set(['りす', 'りか']);
+    expect(generateConstraint('り', used, dict)).toBeNull();
+  });
+
+  it('「ん」で終わる単語しかない場合 → null', () => {
+    const dict = { 'り': ['りん', 'りんかん'] };
+    const used = new Set();
+    expect(generateConstraint('り', used, dict)).toBeNull();
+  });
+});
+
+// --- meetsConstraint ---
+describe('meetsConstraint', () => {
+  it('endsWith: 語尾が一致 → true', () => {
+    expect(meetsConstraint('りす', { type: 'endsWith', char: 'す' })).toBe(true);
+  });
+
+  it('endsWith: 語尾が不一致 → false', () => {
+    expect(meetsConstraint('りか', { type: 'endsWith', char: 'す' })).toBe(false);
+  });
+
+  it('length: 文字数一致 → true', () => {
+    expect(meetsConstraint('りんご', { type: 'length', value: 3 })).toBe(true);
+  });
+
+  it('length: 文字数不一致 → false', () => {
+    expect(meetsConstraint('りす', { type: 'length', value: 3 })).toBe(false);
+  });
+
+  it('contains: 含む → true', () => {
+    expect(meetsConstraint('りんご', { type: 'contains', char: 'ん' })).toBe(true);
+  });
+
+  it('contains: 含まない → false', () => {
+    expect(meetsConstraint('りす', { type: 'contains', char: 'ん' })).toBe(false);
+  });
+
+  it('constraint が null → true', () => {
+    expect(meetsConstraint('りす', null)).toBe(true);
   });
 });

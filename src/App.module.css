@@ -13,6 +13,10 @@
   overflow: hidden;
 }
 
+.mainScrollable {
+  overflow-y: auto;
+}
+
 .footer {
   padding: 8px 12px;
   text-align: center;

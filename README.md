@@ -8,6 +8,11 @@
 
 - CPU とターン制でしりとり対戦
 - JMdict 由来の **15 万語超**の辞書を搭載（名詞・固有名詞）
+- **4 つのゲームモード**
+  - 🎯 **ノーマル** — 基本のしりとり対戦
+  - ⏱️ **タイムアタック** — 60 秒でどれだけ続けられるか挑戦
+  - 🔒 **しばりモード** — 「語尾が す」「4 文字で」など毎ターン制約付き
+  - 🐍 **いじわる CPU** — CPU が「ず」「ぬ」「る」「ぷ」攻めで迫りくる
 - ひらがな入力のみ対応
 - 小文字かな（ゃゅょっ等）・長音符（ー）の自動変換
 - ターン数に応じた結果メッセージ
@@ -62,11 +67,16 @@ src/
 │   ├── GameBoard     # ゲーム画面（入力欄・チャットUI）
 │   ├── Header        # ヘッダー
 │   ├── ResultScreen  # 結果画面
+│   ├── RulesModal    # ルール説明モーダル
+│   ├── TimerBar      # タイムアタック用タイマーバー
+│   ├── TopPage       # モード選択トップ画面
 │   └── WordBubble    # 吹き出し
 ├── data/
 │   └── words.json    # しりとり辞書（JMdict由来）
 ├── hooks/
-│   └── useShiritoriGame.js  # ゲーム状態管理
+│   ├── useShiritoriGame.js      # ノーマル／いじわるCPU用
+│   ├── useTimeAttackGame.js     # タイムアタック用
+│   └── useConstraintGame.js     # しばりモード用
 ├── utils/
 │   └── shiritori.js  # しりとりコアロジック
 ├── App.jsx

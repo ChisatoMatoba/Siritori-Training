@@ -16,11 +16,18 @@ const MODES = [
     available: true,
   },
   {
-    id: 'hard',
-    emoji: '🔥',
-    title: 'ハードモード',
-    description: 'CPUが本気を出してくる…！',
-    available: false,
+    id: 'constraint',
+    emoji: '🔒',
+    title: 'しばりモード',
+    description: '「語尾がす」「4文字で」など毎ターン縛り付き！',
+    available: true,
+  },
+  {
+    id: 'mean',
+    emoji: '🐍',
+    title: 'いじわるCPU',
+    description: 'CPUが「ず」「ぬ」「る」「ぷ」攻めで迫りくる！耐えられるか？',
+    available: true,
   },
 ];
 

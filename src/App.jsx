@@ -6,22 +6,36 @@ import TopPage from './components/TopPage.jsx';
 import RulesModal from './components/RulesModal.jsx';
 import { useShiritoriGame } from './hooks/useShiritoriGame.js';
 import { useTimeAttackGame } from './hooks/useTimeAttackGame.js';
+import { useConstraintGame } from './hooks/useConstraintGame.js';
+import { findMeanComputerWord } from './utils/shiritori.js';
 import styles from './App.module.css';
 
 export default function App() {
   const [screen, setScreen] = useState('top'); // 'top' | 'game'
-  const [mode, setMode] = useState('normal'); // 'normal' | 'time-attack'
+  const [mode, setMode] = useState('normal'); // 'normal' | 'time-attack' | 'mean' | 'constraint'
   const [showRules, setShowRules] = useState(false);
 
   const normalGame = useShiritoriGame();
+  const meanGame = useShiritoriGame({ wordFinder: findMeanComputerWord });
   const timeAttackGame = useTimeAttackGame();
+  const constraintGame = useConstraintGame();
 
-  const game = mode === 'time-attack' ? timeAttackGame : normalGame;
+  function getGame() {
+    if (mode === 'time-attack') return timeAttackGame;
+    if (mode === 'mean') return meanGame;
+    if (mode === 'constraint') return constraintGame;
+    return normalGame;
+  }
+  const game = getGame();
 
   const handleStartGame = (selectedMode) => {
     setMode(selectedMode);
     if (selectedMode === 'time-attack') {
       timeAttackGame.resetGame();
+    } else if (selectedMode === 'mean') {
+      meanGame.resetGame();
+    } else if (selectedMode === 'constraint') {
+      constraintGame.resetGame();
     } else {
       normalGame.resetGame();
     }
@@ -44,7 +58,7 @@ export default function App() {
       {screen === 'top' ? (
         <>
           <Header />
-          <main className={styles.main}>
+          <main className={`${styles.main} ${styles.mainScrollable}`}>
             <TopPage
               onStartGame={handleStartGame}
               onShowRules={() => setShowRules(true)}
@@ -61,8 +75,9 @@ export default function App() {
               error={game.error}
               gameOver={game.gameOver}
               onSubmit={game.submitWord}
-              onGiveUp={mode === 'normal' ? game.giveUp : null}
+              onGiveUp={mode !== 'time-attack' ? game.giveUp : null}
               timer={timer}
+              constraint={mode === 'constraint' ? game.constraint : null}
             />
           </main>
           {game.gameOver && (

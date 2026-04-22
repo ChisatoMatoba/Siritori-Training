@@ -3,7 +3,7 @@ import WordBubble from './WordBubble.jsx';
 import TimerBar from './TimerBar.jsx';
 import styles from './GameBoard.module.css';
 
-export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, onGiveUp, timer }) {
+export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, onGiveUp, timer, constraint }) {
   const [input, setInput] = useState('');
   const chatEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -46,6 +46,11 @@ export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, 
 
       {!gameOver && (
         <form className={styles.inputArea} onSubmit={handleSubmit}>
+          {constraint && (
+            <div className={styles.constraint}>
+              🔒 しばり：{constraint.label}
+            </div>
+          )}
           {error && <div className={styles.error}>{error}</div>}
           <div className={styles.inputRow}>
             <input
