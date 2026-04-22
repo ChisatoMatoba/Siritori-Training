@@ -47,11 +47,11 @@ export default function GameBoard({ words, lastChar, error, gameOver, onSubmit, 
           started={timer.started}
         />
       )}
+      <div className={styles.hint}>
+        「{lastChar}」から始まる単語を入力してね！
+      </div>
       <div className={styles.chat}>
         <div className={styles.chatSpacer} />
-        <div className={styles.hint}>
-          「{lastChar}」から始まる単語を入力してね！
-        </div>
         {words.map((w, i) => (
           <WordBubble key={i} text={w.text} speaker={w.speaker} />
         ))}
