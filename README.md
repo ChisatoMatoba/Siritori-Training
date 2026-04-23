@@ -17,7 +17,7 @@
 - 小文字かな（ゃゅょっ等）・長音符（ー）の自動変換
 - ターン数に応じた結果メッセージ
 - PC・スマホ対応のレスポンシブデザイン
-- サーバー不要 — GitHub Pages で静的ホスティング
+- サーバー不要 — Vercel で静的ホスティング
 
 ## 技術スタック
 
@@ -26,7 +26,7 @@
 | フレームワーク | React 19 |
 | ビルドツール | Vite 5 |
 | テスト | Vitest |
-| デプロイ | GitHub Pages (gh-pages) |
+| デプロイ | Vercel |
 | 辞書データ | JMdict (EDRDG) |
 
 ## セットアップ
@@ -47,7 +47,6 @@ npm run dev
 | `npm run preview` | ビルドのプレビュー |
 | `npm test` | テスト実行 |
 | `npm run test:watch` | テスト（ウォッチモード） |
-| `npm run deploy` | GitHub Pages にデプロイ |
 
 ## 辞書データの再生成
 
@@ -78,7 +77,8 @@ src/
 │   ├── useTimeAttackGame.js     # タイムアタック用
 │   └── useConstraintGame.js     # しばりモード用
 ├── utils/
-│   └── shiritori.js  # しりとりコアロジック
+│   ├── shiritori.js       # しりとりコアロジック
+│   └── shiritori.test.js  # ユニットテスト
 ├── App.jsx
 └── main.jsx
 scripts/
